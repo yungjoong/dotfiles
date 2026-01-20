@@ -28,15 +28,16 @@ LINKS=(
     ["$DIR/tmux.conf"]="$HOME/.tmux.conf"
     # Link the entire nvim config directory
     ["$DIR/config/nvim"]="$NVIM_CONFIG_DIR"
+    ["$DIR/config/clangd/config"]="$HOME/.config/clangd/config"
 )
 
 # Create symlinks
 for src in "${!LINKS[@]}"; do
     dest="${LINKS[$src]}"
-    
+
     # Create parent directory of destination if it doesn't exist
     mkdir -p "$(dirname "$dest")"
-    
+
     # Check if source file/dir exists before creating link
     if [ -e "$src" ]; then
         echo "Linking $src to $dest"
