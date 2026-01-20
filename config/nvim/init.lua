@@ -26,3 +26,7 @@ require('telescope')
 require('treesitter')
 -- Load Colorscheme
 require('colorscheme')
+-- Load Formatter
+require('formatter')
+-- Load DAP
+require('dap')

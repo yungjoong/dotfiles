@@ -16,6 +16,22 @@ return require('packer').startup(function(use)
   }
 
   -- --- Utility ---
+  -- Git integration
+  use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
+
+  -- File Explorer
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('nvim-tree').setup()
+      local keymap = vim.api.nvim_set_keymap
+      local opts = { noremap = true, silent = true }
+      keymap('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
+      keymap('n', '<leader>o', ':NvimTreeFindFile<CR>', opts)
+    end
+  }
+
   -- Fuzzy Finder
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -31,6 +47,9 @@ return require('packer').startup(function(use)
   -- --- LSP & Autocompletion ---
   use { 'neovim/nvim-lspconfig' } -- Collection of configurations for built-in LSP client
 
+  -- Formatter & Linter
+  use { 'nvimtools/none-ls.nvim' }
+
   -- Autocompletion framework
   use { 'hrsh7th/nvim-cmp' }
   use { 'hrsh7th/cmp-buffer' } -- buffer completions
@@ -41,6 +60,11 @@ return require('packer').startup(function(use)
   -- Snippets
   use { 'L3MON4D3/LuaSnip' } -- snippet engine
   use { 'saadparwaiz1/cmp_luasnip' } -- snippet source for nvim-cmp
+
+  -- --- Debugging ---
+  use { 'mfussenegger/nvim-dap' }
+  use { 'rcarriga/nvim-dap-ui' }
+  use { 'theHamsta/nvim-dap-virtual-text' }
 
 
 end)

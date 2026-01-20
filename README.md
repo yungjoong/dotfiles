@@ -28,9 +28,11 @@ This setup includes a modern Neovim configuration with:
 
 This configuration relies on some external tools that need to be installed on your system via a package manager (e.g., `apt`, `brew`).
 
-### Required for Neovim setup:
+### Required Core Tools:
 - `nvim` (v0.7.0 or higher)
 - `git`
+- `tmux`
+- `vim`
 - `ripgrep` (for Telescope's `live_grep`)
 
 ### Recommended for C/C++ Kernel Development:
@@ -41,10 +43,40 @@ This configuration relies on some external tools that need to be installed on yo
 - `gdb` (for debugging)
 - `qemu` (for running the kernel)
 
+### IDE Features Dependencies:
+For the full IDE experience (formatting, linting, debugging), you need to install these external tools.
+
+**Language Servers (already covered by lsp-config):**
+- `pyright` (Python)
+- `typescript-language-server` (TypeScript/JavaScript)
+- `vue-language-server` (Vue)
+
+**Formatters & Linters:**
+- `clang-format` (C/C++)
+- `black` and `ruff` (Python)
+- `prettier` and `eslint` (JS/TS/Vue)
+
+**Debug Adapters:**
+- `debugpy` (Python)
+- `codelldb` (C/C++)
+
+**Example installation (pip and npm):**
+```bash
+# Python tools
+pip install debugpy black ruff
+
+# JavaScript/TypeScript/Vue tools
+npm install -g prettier eslint @volar/vue-language-server typescript-language-server typescript
+
+# C/C++ tools (codelldb needs to be installed manually, see its documentation)
+# On Ubuntu, clang-format is part of the clang-format package.
+sudo apt-get install clang-format
+```
+
 **Example installation on Ubuntu/Debian:**
 ```bash
 # Core tools
-sudo apt-get install neovim git ripgrep
+sudo apt-get install neovim git tmux vim ripgrep
 
 # Kernel analysis tools
 sudo apt-get install universal-ctags cscope clangd bear gdb qemu-system-x86
