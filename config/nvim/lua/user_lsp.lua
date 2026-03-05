@@ -1,7 +1,24 @@
 -- LSP configuration
 
-local lspconfig = require('lspconfig')
-local cmp = require('cmp')
+local orig_deprecate = vim.deprecate
+vim.deprecate = function(name, alt, version, plugin, bt)
+  if plugin == 'nvim-lspconfig' then return end
+  if orig_deprecate then orig_deprecate(name, alt, version, plugin, bt) end
+end
+
+local status, lspconfig = pcall(require, 'lspconfig')
+
+if not status then
+  print("lspconfig not found")
+  if orig_deprecate then vim.deprecate = orig_deprecate end
+  return
+end
+
+local cmp_status, cmp = pcall(require, 'cmp')
+if not cmp_status then
+  print("cmp not found")
+  return
+end
 
 -- Custom on_attach function
 local on_attach = function(client, bufnr)
@@ -31,17 +48,28 @@ end
 
 
 -- Setup language servers.
-local servers = { 'clangd', 'pyright', 'tsserver', 'volar' } -- Add more servers here
+local servers = { 'clangd', 'pyright', 'ts_ls', 'volar' } -- Add more servers here
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-  }
+  local ok, server = pcall(function() return lspconfig[lsp] end)
+  if ok and server then
+    server.setup {
+      on_attach = on_attach,
+      capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    }
+  end
+end
+
+if orig_deprecate then
+  vim.deprecate = orig_deprecate
 end
 
 
 -- nvim-cmp setup
-local luasnip = require('luasnip')
+local ls_status, luasnip = pcall(require, 'luasnip')
+if not ls_status then
+  print("luasnip not found")
+  return
+end
 
 cmp.setup({
   snippet = {

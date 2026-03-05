@@ -1,7 +1,17 @@
 -- Telescope configuration
-local actions = require('telescope.actions')
+local status, telescope = pcall(require, 'telescope')
+if not status then
+  print("telescope not found")
+  return
+end
 
-require('telescope').setup{
+local actions_status, actions = pcall(require, 'telescope.actions')
+if not actions_status then
+  print("telescope.actions not found")
+  return
+end
+
+telescope.setup{
   defaults = {
     -- Default configuration for telescope goes here:
     -- config_key = value,

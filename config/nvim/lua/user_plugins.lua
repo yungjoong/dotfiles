@@ -41,6 +41,7 @@ return require('packer').startup(function(use)
   -- Syntax Highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
     run = ':TSUpdate'
   }
 
@@ -63,6 +64,7 @@ return require('packer').startup(function(use)
 
   -- --- Debugging ---
   use { 'mfussenegger/nvim-dap' }
+  use { "nvim-neotest/nvim-nio" }
   use { 'rcarriga/nvim-dap-ui' }
   use { 'theHamsta/nvim-dap-virtual-text' }
 

@@ -1,5 +1,11 @@
 -- Treesitter configuration
-require'nvim-treesitter.configs'.setup {
+local status, configs = pcall(require, 'nvim-treesitter.configs')
+if not status then
+  print("nvim-treesitter not found")
+  return
+end
+
+configs.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "c", "lua", "vim", "python" },
 

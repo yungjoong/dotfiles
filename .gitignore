@@ -1,0 +1,5 @@
+# Neovim plugin cache
+config/nvim/plugin/packer_compiled.lua
+# OS generated files
+.DS_Store
+*.swp

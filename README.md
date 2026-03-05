@@ -7,7 +7,8 @@ It's managed by a simple bootstrap script.
 
 1. Clone this repository to your home directory:
    ```bash
-   git clone <your-git-repo-url> ~/dotfiles
+   git clone yungjoong/dotfiles.git ~/dotfiles
+
    ```
 2. Run the bootstrap script:
    ```bash

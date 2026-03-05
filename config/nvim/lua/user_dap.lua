@@ -1,12 +1,23 @@
 -- lua/dap.lua
-local dap = require('dap')
-local dapui = require('dapui')
+local status_ok, dap = pcall(require, 'dap')
+if not status_ok then
+  print("dap not found")
+  return
+end
+
+local ui_ok, dapui = pcall(require, 'dapui')
+if not ui_ok then
+  print("dapui not found")
+  return
+end
+
+local vt_ok, vt = pcall(require, 'nvim-dap-virtual-text')
+if vt_ok then
+  vt.setup()
+end
 
 -- Setup for dapui
 dapui.setup()
-
--- Setup for virtual text
-require('nvim-dap-virtual-text').setup()
 
 
 -- Keymaps for debugging

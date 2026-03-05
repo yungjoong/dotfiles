@@ -1,3 +1,10 @@
+-- Suppress vim.tbl_islist deprecation warning from packer
+local orig_deprecate = vim.deprecate
+vim.deprecate = function(name, ...)
+  if name == 'vim.tbl_islist' then return end
+  if orig_deprecate then return orig_deprecate(name, ...) end
+end
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -13,20 +20,30 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Load plugins
-require('plugins')
+require('user_plugins')
+
+-- Force load packer compiled file so that lua package.path is updated
+local compiled_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua'
+if vim.fn.filereadable(compiled_path) == 1 then
+  dofile(compiled_path)
+end
+
+-- Force load all start packages immediately so we can configure them
+vim.cmd [[packloadall!]]
+
 -- Load basic options
-require('options')
+require('user_options')
 -- Load keymaps
-require('keymaps')
+require('user_keymaps')
 -- Load LSP settings
-require('lsp')
+require('user_lsp')
 -- Load Telescope settings
-require('telescope')
+require('user_telescope')
 -- Load Treesitter settings
-require('treesitter')
+require('user_treesitter')
 -- Load Colorscheme
-require('colorscheme')
+require('user_colorscheme')
 -- Load Formatter
-require('formatter')
+require('user_formatter')
 -- Load DAP
-require('dap')
+require('user_dap')

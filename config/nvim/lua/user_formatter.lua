@@ -1,16 +1,16 @@
 -- lua/formatter.lua
-local null_ls = require("null-ls")
+local status, null_ls = pcall(require, "null-ls")
+if not status then
+    print("null-ls (none-ls) not found")
+    return
+end
+
+local b = null_ls.builtins
 
 null_ls.setup({
     sources = {
-        -- Linters
-        null_ls.builtins.linting.eslint,
-        null_ls.builtins.linting.ruff,
-
-        -- Formatters
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.formatting.black,
-        null_ls.builtins.formatting.clang_format,
+        -- Builtins were moved to external repos in none-ls,
+        -- so we need to install them separately (e.g. none-ls-extras.nvim)
     },
     -- Auto-formatting on save
     on_attach = function(client, bufnr)
